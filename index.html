@@ -25,7 +25,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__container">
         <a href="#inicio" class="navbar__logo">
-          Lic. <span>Fogliatto</span>
+          Lic. <span>Federico Fogliatto</span>
           <small>Kinesiología a domicilio</small>
         </a>
         <button class="navbar__toggle" id="navToggle" aria-label="Menú">
@@ -79,70 +79,6 @@
         </div>
       </div>
       <div class="hero__right">
-        <!-- Ícono columna vertebral -->
-        <div class="hero__deco hero__deco--1">
-          <svg
-            viewBox="0 0 48 48"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <rect x="16" y="4" width="16" height="10" rx="4" />
-            <rect x="16" y="19" width="16" height="10" rx="4" />
-            <rect x="16" y="34" width="16" height="10" rx="4" />
-            <line x1="24" y1="14" x2="24" y2="19" />
-            <line x1="24" y1="29" x2="24" y2="34" />
-          </svg>
-        </div>
-        <!-- Ícono mano terapéutica -->
-        <div class="hero__deco hero__deco--2">
-          <svg
-            viewBox="0 0 48 48"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M12 20V12a4 4 0 0 1 8 0v8" />
-            <path d="M20 19V10a4 4 0 0 1 8 0v9" />
-            <path
-              d="M28 19v-6a4 4 0 0 1 8 0v10c0 8-6 14-14 14a14 14 0 0 1-14-14v-4a4 4 0 0 1 8 0v4"
-            />
-          </svg>
-        </div>
-        <!-- Ícono corazón/pulso -->
-        <div class="hero__deco hero__deco--3">
-          <svg
-            viewBox="0 0 48 48"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="4,24 10,24 14,12 18,36 22,20 26,28 30,24 44,24" />
-          </svg>
-        </div>
-        <!-- Ícono figura en movimiento -->
-        <div class="hero__deco hero__deco--4">
-          <svg
-            viewBox="0 0 48 48"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="24" cy="8" r="5" />
-            <path d="M24 13v14" />
-            <path d="M14 18l10 4 10-4" />
-            <path d="M18 44l6-17 6 17" />
-          </svg>
-        </div>
-
         <div class="hero__card">
           <div class="hero__card-title">Tratamientos disponibles</div>
           <ul class="hero__treatments">
@@ -188,7 +124,9 @@
                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
               </svg>
             </div>
-            <h3 class="service-card__name">Kinesiología geriátrica</h3>
+            <h3 class="service-card__name">
+              Kinesiología para adultos mayores
+            </h3>
             <p class="service-card__desc">
               Ejercicio terapéutico, equilibrio y prevención de caídas para
               adultos mayores en casa.
@@ -265,7 +203,6 @@
               <li>Magnetoterapia</li>
               <li>Láser infrarrojo</li>
               <li>Ultrasonidos</li>
-              <li>Estimulador neuromuscular</li>
               <li>TENS</li>
             </ul>
           </div>
@@ -340,12 +277,12 @@
               Atención profesional<br />con calidez humana
             </h2>
             <p class="section-sub">
-              Soy Federico Fogliatto, Licenciado en Kinesiología y Fisiatría
-              recibido en la Universidad del Gran Rosario (IUGR). Con más de 20
-              años de experiencia, me especialicé en el cuidado de adultos
-              mayores y personas con movilidad reducida, convencido de que la
-              mejor rehabilitación es la que ocurre en el entorno familiar del
-              paciente.
+              Soy Federico Fogliatto, Licenciado en Kinesiología y Fisiatría,
+              egresado de la Universidad del Gran Rosario (IUGR), con más de 20
+              años de experiencia y especialización en Neurología. Me dedico al
+              tratamiento y rehabilitación de adultos mayores y personas con
+              discapacidad, convencido de que la mejor rehabilitación es la que
+              ocurre en el propio hogar del paciente.
             </p>
             <ul class="about__list">
               <li>
@@ -461,6 +398,20 @@
             <div class="testimonial-card__author">Soledad P.</div>
             <div class="testimonial-card__role">
               Familiar de paciente · Fractura de cadera
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__text">
+              "Desde la primera visita sentimos que estábamos en buenas manos.
+              Federico explica cada ejercicio con claridad y se nota que conoce
+              muy bien a sus pacientes. Mi papá recuperó la movilidad mucho
+              antes de lo que esperábamos."
+            </p>
+            <div class="testimonial-card__author">Carolina M.</div>
+            <div class="testimonial-card__role">
+              Familiar de paciente · Rehabilitación neurológica
             </div>
           </div>
         </div>
@@ -601,7 +552,9 @@
               <label for="consulta">Tipo de consulta</label>
               <select id="consulta" name="consulta">
                 <option value="">Seleccioná una opción</option>
-                <option value="geriatrica">Rehabilitación geriátrica</option>
+                <option value="geriatrica">
+                  Kinesiología para adultos mayores
+                </option>
                 <option value="neurologica">
                   Neurológica / ACV / Parkinson
                 </option>
@@ -656,7 +609,7 @@
     <footer class="footer">
       <div class="footer__container">
         <div class="footer__logo">
-          Lic. <span>Fogliatto</span> · Kinesiología a domicilio
+          Lic. <span>Federico Fogliatto</span> · Kinesiología a domicilio
         </div>
         <div class="footer__copy">
           © 2025 · Federico Fogliatto · Rosario, Santa Fe
