@@ -1,0 +1,22 @@
+{
+  "name": "sitiokinesiologia",
+  "version": "1.0.0",
+  "description": "Sitio web de kinesiología a domicilio - Lic. Federico Fogliatto - Rosario",
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp build"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "browser-sync": "^3.0.2",
+    "cssnano": "^7.0.5",
+    "gulp": "^5.0.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^10.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-terser": "^2.1.0",
+    "sass": "^1.77.8"
+  }
+}

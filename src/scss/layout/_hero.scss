@@ -1,0 +1,187 @@
+@use '../base/variables' as *;
+
+// ─── HERO ──────────────────────────────────────────────────
+.hero {
+  min-height: calc(100vh - 64px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  &__left {
+    padding: 5rem $section-padding-h;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: fadeUp 0.8s ease forwards;
+
+    @media (max-width: 768px) {
+      padding: 3rem 1.5rem;
+    }
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: $gold-light;
+    color: $gold;
+    border: 1px solid rgba(201, 169, 110, 0.3);
+    padding: 6px 14px;
+    border-radius: $radius-pill;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+
+    &::before { content: "●"; font-size: 8px; }
+  }
+
+  &__title {
+    font-family: $font-serif;
+    font-size: 3.2rem;
+    line-height: 1.15;
+    color: $text-dark;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.5px;
+
+    em { color: $sage; font-style: italic; }
+
+    @media (max-width: 768px) { font-size: 2.4rem; }
+  }
+
+  &__sub {
+    font-size: 1.05rem;
+    color: $text-mid;
+    line-height: 1.7;
+    max-width: 440px;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  &__stats {
+    display: flex;
+    gap: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid $border;
+    flex-wrap: wrap;
+  }
+
+  &__stat { display: flex; flex-direction: column; }
+
+  &__stat-num {
+    font-family: $font-serif;
+    font-size: 1.8rem;
+    color: $sage;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  &__stat-label {
+    font-size: 12px;
+    color: $text-light;
+    margin-top: 4px;
+  }
+
+  &__right {
+    background: $sage-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: rgba(201, 169, 110, 0.07);
+      border-radius: 50%;
+      top: -100px;
+      right: -100px;
+    }
+
+    @media (max-width: 900px) {
+      padding: 2rem 1.5rem;
+      min-height: 300px;
+    }
+  }
+
+  &__card {
+    background: $white;
+    border-radius: $radius-xl;
+    padding: 2.25rem;
+    border: 1px solid $border;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__card-title {
+    font-family: $font-serif;
+    font-size: 20px;
+    color: $text-dark;
+    margin-bottom: 1.25rem;
+    font-weight: 500;
+  }
+
+  &__treatments {
+    display: flex;
+    flex-direction: column;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid $border;
+      font-size: 15px;
+      color: $text-mid;
+
+      &:last-child { border-bottom: none; }
+    }
+  }
+
+  &__deco {
+    position: absolute;
+    opacity: 0.18;
+
+    svg { stroke: $sage; }
+
+    &--1 { top: 10%; left: 8%; svg { width: 56px; height: 56px; } }
+    &--2 { top: 12%; right: 10%; svg { width: 64px; height: 64px; } }
+    &--3 { bottom: 15%; left: 6%; svg { width: 72px; height: 72px; } }
+    &--4 { bottom: 18%; right: 8%; svg { width: 52px; height: 52px; } }
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &--sage { background: $sage; }
+  &--gold { background: $gold; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

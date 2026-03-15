@@ -1,0 +1,537 @@
+@use '../base/variables' as *;
+
+// ─── SERVICIOS ─────────────────────────────────────────────
+.services {
+  padding: $section-padding-v $section-padding-h;
+  background: $cream;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+  }
+
+  .container {
+    max-width: $container-max;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 540px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.service-card {
+  background: $white;
+  border-radius: $radius-lg;
+  padding: 1.75rem;
+  border: 1px solid $border;
+  transition: $transition;
+
+  &:hover {
+    border-color: $sage-mid;
+    transform: translateY(-2px);
+  }
+
+  &__icon {
+    width: 44px;
+    height: 44px;
+    background: $sage-light;
+    border-radius: $radius-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      stroke: $sage;
+    }
+  }
+
+  &__name {
+    font-family: $font-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: $text-dark;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  &__desc {
+    font-size: 13px;
+    color: $text-mid;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  &__equipo {
+    list-style: none;
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    li {
+      background: $sage-light;
+      color: $sage;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: $radius-pill;
+      border: 1px solid $border;
+    }
+  }
+}
+
+// ─── ABOUT ─────────────────────────────────────────────────
+.about {
+  padding: $section-padding-v $section-padding-h;
+  background: $white;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+  }
+
+  .container {
+    max-width: $container-max;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  // ── FIX MOBILE: img empuja al contenedor en lugar de flotar sobre él ──
+  &__img-wrap {
+    background: $sage-light;
+    border-radius: $radius-xl;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      display: block;
+      height: 500px; // altura fija, no 100%
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    @media (max-width: 900px) {
+      max-width: 320px;
+      margin: 0 auto;
+
+      img {
+        height: 380px;
+      }
+    }
+  }
+
+  &__img-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: $text-light;
+
+    svg {
+      width: 64px;
+      height: 64px;
+      stroke: $sage-mid;
+    }
+
+    span {
+      font-size: 13px;
+      color: $text-light;
+    }
+  }
+
+  &__credential {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: $white;
+    border-radius: $radius-pill;
+    padding: 8px 18px;
+    font-size: 12px;
+    color: $sage;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid $border;
+  }
+
+  &__content {
+    .section-sub {
+      margin-bottom: 0;
+    }
+  }
+
+  &__list {
+    margin: 1.5rem 0 2rem;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      font-size: 14px;
+      color: $text-mid;
+      border-bottom: 1px solid $border;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: $sage-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg {
+    width: 11px;
+    height: 11px;
+    stroke: $sage;
+  }
+}
+
+// ─── TESTIMONIOS ───────────────────────────────────────────
+.testimonials {
+  padding: $section-padding-v $section-padding-h;
+  background: $cream;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+  }
+
+  .container {
+    max-width: $container-max;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.testimonial-card {
+  background: $white;
+  border-radius: $radius-lg;
+  padding: 1.5rem;
+  border: 1px solid $border;
+
+  &__stars {
+    color: $gold;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 0.75rem;
+  }
+
+  &__text {
+    font-size: 14px;
+    color: $text-mid;
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 1rem;
+    font-weight: 300;
+    font-family: $font-serif;
+  }
+
+  &__author {
+    font-size: 13px;
+    font-weight: 500;
+    color: $text-dark;
+  }
+
+  &__role {
+    font-size: 12px;
+    color: $text-light;
+    margin-top: 2px;
+  }
+}
+
+// ─── CONTACTO ──────────────────────────────────────────────
+.contact {
+  padding: $section-padding-v $section-padding-h;
+  background: $white;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+  }
+
+  .container {
+    max-width: $container-max;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 4rem;
+    align-items: start;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  &__info {
+    .section-sub {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+    align-items: flex-start;
+  }
+
+  &__icon {
+    width: 42px;
+    height: 42px;
+    background: $sage-light;
+    border-radius: $radius-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      stroke: $sage;
+    }
+  }
+
+  &__label {
+    font-size: 12px;
+    color: $text-light;
+    margin-bottom: 2px;
+  }
+
+  &__value {
+    font-size: 15px;
+    color: $text-dark;
+    font-weight: 500;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $sage;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: $text-mid;
+    margin-bottom: 6px;
+    font-weight: 400;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid $border;
+    border-radius: $radius-sm;
+    font-size: 14px;
+    color: $text-dark;
+    background: $cream;
+    transition: border-color 0.2s;
+    outline: none;
+    appearance: none;
+
+    &:focus {
+      border-color: $sage;
+      background: $white;
+    }
+
+    &::placeholder {
+      color: $text-light;
+    }
+  }
+
+  textarea {
+    resize: none;
+    height: 110px;
+    line-height: 1.6;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a9a8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+}
+
+.form-success {
+  display: none;
+  background: $sage-light;
+  color: $sage;
+  border: 1px solid $sage-mid;
+  border-radius: $radius-sm;
+  padding: 12px 16px;
+  font-size: 14px;
+  margin-top: 0.75rem;
+  text-align: center;
+
+  &.visible {
+    display: block;
+  }
+}
+
+// ─── WHATSAPP BANNER ───────────────────────────────────────
+.wsp-banner {
+  background: linear-gradient(135deg, #1a3a1a 0%, #2d5a2d 100%);
+  padding: 3rem $section-padding-h;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  &__text {
+    p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.2rem;
+      font-family: $font-serif;
+      font-weight: 500;
+    }
+
+    span {
+      display: block;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 14px;
+      font-weight: 300;
+      margin-top: 4px;
+    }
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #25d366;
+    color: $white;
+    padding: 14px 28px;
+    border-radius: $radius-pill;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: $transition;
+
+    &:hover {
+      background: #1fb558;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: $white;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ─── FOOTER ────────────────────────────────────────────────
+.footer {
+  background: $text-dark;
+  padding: 2rem $section-padding-h;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  &__container {
+    max-width: $container-max;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__logo {
+    font-family: $font-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+
+    span {
+      color: $gold;
+    }
+  }
+
+  &__copy {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.35);
+  }
+}

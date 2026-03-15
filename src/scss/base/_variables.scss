@@ -1,0 +1,37 @@
+// ─── COLORES ───────────────────────────────────────────────
+$sage:           #5a7a5a;
+$sage-dark:      #4a6a4a;
+$sage-light:     #e8f0e8;
+$sage-mid:       #b8cfb8;
+
+$gold:           #c9a96e;
+$gold-light:     #f7f0e3;
+
+$cream:          #faf8f4;
+$white:          #ffffff;
+
+$text-dark:      #2c3a2c;
+$text-mid:       #5a6b5a;
+$text-light:     #8a9a8a;
+
+$border:         rgba(90, 122, 90, 0.15);
+$border-mid:     rgba(90, 122, 90, 0.25);
+
+// ─── TIPOGRAFÍA ────────────────────────────────────────────
+$font-serif:  'Lora', Georgia, serif;
+$font-sans:   'DM Sans', system-ui, sans-serif;
+
+// ─── ESPACIADO ─────────────────────────────────────────────
+$section-padding-v: 5rem;
+$section-padding-h: 4rem;
+$container-max:     1200px;
+
+// ─── RADIOS ────────────────────────────────────────────────
+$radius-sm:   8px;
+$radius-md:   12px;
+$radius-lg:   16px;
+$radius-xl:   24px;
+$radius-pill: 100px;
+
+// ─── TRANSICIONES ──────────────────────────────────────────
+$transition: all 0.2s ease;
