@@ -1,3 +1,40 @@
+// ─── DESOFUSCAR NÚMERO DE TELÉFONO ─────────────────────────
+// Decodifica el número del atributo data-phone (base64) y construye los enlaces
+function decodePhoneLinks() {
+  const phoneLinks = document.querySelectorAll('[data-phone]');
+  
+  phoneLinks.forEach(link => {
+    try {
+      // Decodificar base64
+      const encodedPhone = link.getAttribute('data-phone');
+      const decodedPhone = atob(encodedPhone);
+      const linkType = link.getAttribute('data-link-type');
+      
+      let href = '';
+      
+      if (linkType === 'whatsapp') {
+        href = `https://wa.me/${decodedPhone}`;
+      } else if (linkType === 'whatsapp-banner') {
+        const message = link.getAttribute('data-message');
+        href = `https://wa.me/${decodedPhone}?text=${message}`;
+      } else if (linkType === 'tel') {
+        href = `tel:+${decodedPhone}`;
+      }
+      
+      link.setAttribute('href', href);
+    } catch (error) {
+      console.error('Error al decodificar número de teléfono:', error);
+    }
+  });
+}
+
+// Ejecutar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', decodePhoneLinks);
+} else {
+  decodePhoneLinks();
+}
+
 // ─── FORMULARIO DE CONTACTO ────────────────────────────────
 // Netlify Forms maneja el envío automáticamente.
 // Este script agrega feedback visual y validación básica.
@@ -17,6 +54,12 @@ if (form) {
     submitBtn.disabled = true;
 
     try {
+      // Obtener token de reCAPTCHA v3
+      if (typeof grecaptcha !== 'undefined') {
+        const token = await grecaptcha.execute('6LeIBqQsAAAAAKbVCSsrUfAry7T22uDEjTioMfCu', { action: 'submit' });
+        document.getElementById('recaptchaResponse').value = token;
+      }
+
       const formData = new FormData(form);
 
       const response = await fetch('/', {

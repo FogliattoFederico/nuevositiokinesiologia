@@ -19,6 +19,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="build/css/app.css" />
+    <!-- reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </head>
   <body>
     <!-- NAVBAR -->
@@ -37,7 +39,7 @@
           <li><a href="#testimonios">Testimonios</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
-        <a href="https://wa.me/543416758691" target="_blank" class="navbar__cta"
+        <a href="#" data-phone="NTQzNDE2NzU4Njkx" data-link-type="whatsapp" target="_blank" class="navbar__cta"
           >Pedir turno</a
         >
       </div>
@@ -474,7 +476,7 @@
               </div>
               <div>
                 <div class="contact__label">Teléfono / WhatsApp</div>
-                <a href="tel:+543416758691" class="contact__value"
+                <a href="#" data-phone="NTQzNDE2NzU4Njkx" data-link-type="tel" class="contact__value"
                   >341 675-8691</a
                 >
               </div>
@@ -535,7 +537,8 @@
             data-netlify="true"
             netlify-honeypot="bot-field"
             id="contactForm"
-          >
+          >input type="hidden" name="g-recaptcha-response" id="recaptchaResponse" />
+            <
             <input type="hidden" name="form-name" value="contacto" />
             <p class="hidden">
               <label>No completar: <input name="bot-field" /></label>
@@ -619,7 +622,10 @@
         <span>Respondemos consultas de lunes a sábado de 8 a 20 hs</span>
       </div>
       <a
-        href="https://wa.me/543416758691?text=Hola%20Federico%2C%20quiero%20consultar%20sobre%20kinesiolog%C3%ADa%20a%20domicilio"
+        href="#"
+        data-phone="NTQzNDE2NzU4Njkx"
+        data-link-type="whatsapp-banner"
+        data-message="Hola%20Federico%2C%20quiero%20consultar%20sobre%20kinesiolog%C3%ADa%20a%20domicilio"
         target="_blank"
         class="wsp-banner__btn"
       >
