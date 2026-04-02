@@ -1,3 +1,34 @@
+// ─── RATE LIMITING ─────────────────────────────────────────
+// Limita el número de intentos de envío del formulario
+class FormRateLimiter {
+  constructor(maxAttempts = 3, windowMs = 60000) { // 3 intentos cada 60 segundos
+    this.maxAttempts = maxAttempts;
+    this.windowMs = windowMs;
+    this.attempts = [];
+  }
+
+  isAllowed() {
+    const now = Date.now();
+    // Limpiar intentos antiguos (fuera de la ventana de tiempo)
+    this.attempts = this.attempts.filter(time => now - time < this.windowMs);
+    
+    if (this.attempts.length < this.maxAttempts) {
+      this.attempts.push(now);
+      return true;
+    }
+    return false;
+  }
+
+  getWaitTime() {
+    if (this.attempts.length === 0) return 0;
+    const oldestAttempt = this.attempts[0];
+    const waitTime = Math.ceil((this.windowMs - (Date.now() - oldestAttempt)) / 1000);
+    return Math.max(0, waitTime);
+  }
+}
+
+const rateLimiter = new FormRateLimiter(3, 60000); // 3 intentos cada 60 segundos
+
 // ─── DESOFUSCAR NÚMERO DE TELÉFONO ─────────────────────────
 // Decodifica el número del atributo data-phone (base64) y construye los enlaces
 function decodePhoneLinks() {
@@ -23,7 +54,7 @@ function decodePhoneLinks() {
       
       link.setAttribute('href', href);
     } catch (error) {
-      console.error('Error al decodificar número de teléfono:', error);
+      // Silenciar error sin exponer detalles
     }
   });
 }
@@ -37,7 +68,7 @@ if (document.readyState === 'loading') {
 
 // ─── FORMULARIO DE CONTACTO ────────────────────────────────
 // Netlify Forms maneja el envío automáticamente.
-// Este script agrega feedback visual y validación básica.
+// Este script agrega feedback visual, validación y rate limiting.
 
 const form        = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
@@ -48,6 +79,16 @@ if (form) {
 
     const submitBtn = form.querySelector('[type="submit"]');
     const originalText = submitBtn.textContent;
+
+    // ─── VERIFICAR RATE LIMITING ───────────────────────────
+    if (!rateLimiter.isAllowed()) {
+      const waitTime = rateLimiter.getWaitTime();
+      const errorMsg = waitTime > 0 
+        ? `Por favor espera ${waitTime} segundos antes de intentar nuevamente.`
+        : 'Demasiados intentos. Por favor intenta más tarde.';
+      alert(errorMsg);
+      return;
+    }
 
     // Estado de carga
     submitBtn.textContent = 'Enviando...';
@@ -69,7 +110,7 @@ if (form) {
       });
 
       if (response.ok) {
-        // Éxito
+        // ✅ Éxito
         form.reset();
         formSuccess.classList.add('visible');
         submitBtn.textContent = '¡Enviado!';
@@ -81,14 +122,21 @@ if (form) {
           submitBtn.disabled = false;
         }, 6000);
       } else {
-        throw new Error('Error en el servidor');
+        throw new Error('server_error');
       }
     } catch (error) {
-      // Fallback: redirigir al formulario nativo de Netlify
-      console.error('Error al enviar:', error);
+      // ✅ Manejo de errores seguro (sin exponer detalles técnicos)
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
-      alert('Hubo un problema al enviar. Por favor intentá nuevamente o escribinos por WhatsApp.');
+      
+      // Mostrar mensaje genérico al usuario
+      alert('No pudimos procesar tu consulta. Por favor intenta nuevamente o escribinos por WhatsApp.');
+      
+      // Logging seguro (sin detalles sensibles)
+      // En producción, esto se enviaría a un servicio de logging seguro
+      if (typeof error !== 'undefined' && error.message === 'server_error') {
+        // Log interno solo para debugging (sin exponerlo al usuario)
+      }
     }
   });
 }
