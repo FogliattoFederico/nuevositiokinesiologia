@@ -1,116 +1,134 @@
-// ─── RATE LIMITING ─────────────────────────────────────────
-// Limita el número de intentos de envío del formulario
-class FormRateLimiter {
-  constructor(maxAttempts = 3, windowMs = 60000) { // 3 intentos cada 60 segundos
-    this.maxAttempts = maxAttempts;
-    this.windowMs = windowMs;
-    this.attempts = [];
+// ─── NAVBAR SCROLL ─────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
   }
+});
 
-  isAllowed() {
-    const now = Date.now();
-    // Limpiar intentos antiguos (fuera de la ventana de tiempo)
-    this.attempts = this.attempts.filter(time => now - time < this.windowMs);
-    
-    if (this.attempts.length < this.maxAttempts) {
-      this.attempts.push(now);
-      return true;
-    }
-    return false;
-  }
+// ─── MENÚ MOBILE ───────────────────────────────────────────
+const navToggle = document.getElementById('navToggle');
+const navLinks  = document.getElementById('navLinks');
 
-  getWaitTime() {
-    if (this.attempts.length === 0) return 0;
-    const oldestAttempt = this.attempts[0];
-    const waitTime = Math.ceil((this.windowMs - (Date.now() - oldestAttempt)) / 1000);
-    return Math.max(0, waitTime);
-  }
-}
+navToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  navToggle.classList.toggle('open');
+});
 
-const rateLimiter = new FormRateLimiter(3, 60000); // 3 intentos cada 60 segundos
+// Cerrar menú al hacer click en un link
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.classList.remove('open');
+  });
+});
 
-// ─── DESOFUSCAR NÚMERO DE TELÉFONO ─────────────────────────
-// Decodifica el número del atributo data-phone (base64) y construye los enlaces
-function decodePhoneLinks() {
-  const phoneLinks = document.querySelectorAll('[data-phone]');
-  
-  phoneLinks.forEach(link => {
-    try {
-      // Decodificar base64
-      const encodedPhone = link.getAttribute('data-phone');
-      const decodedPhone = atob(encodedPhone);
-      const linkType = link.getAttribute('data-link-type');
-      
-      let href = '';
-      
-      if (linkType === 'whatsapp') {
-        href = `https://wa.me/${decodedPhone}`;
-      } else if (linkType === 'whatsapp-banner') {
-        const message = link.getAttribute('data-message');
-        href = `https://wa.me/${decodedPhone}?text=${message}`;
-      } else if (linkType === 'tel') {
-        href = `tel:+${decodedPhone}`;
-      }
-      
-      link.setAttribute('href', href);
-    } catch (error) {
-      // Silenciar error sin exponer detalles
+// ─── SMOOTH SCROLL PARA LINKS INTERNOS ─────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = 70;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   });
+});
+
+// ─── FADE + SLIDE AL HACER SCROLL ──────────────────────────
+const observerOptions = {
+  threshold: 0.15,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.service-card, .testimonial-card, .about__grid, .contact__grid, .hero__card').forEach(el => {
+  el.classList.add('fade-in');
+  observer.observe(el);
+});
+
+// ─── CONTADOR ANIMADO ──────────────────────────────────────
+function animateCounter(el, target, duration = 1500, suffix = '') {
+  let start = 0;
+  const increment = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += increment;
+    if (start >= target) {
+      el.textContent = '+' + target + suffix;
+      clearInterval(timer);
+    } else {
+      el.textContent = '+' + Math.floor(start) + suffix;
+    }
+  }, 16);
 }
 
-// Ejecutar cuando el DOM esté listo
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', decodePhoneLinks);
-} else {
-  decodePhoneLinks();
-}
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const nums = entry.target.querySelectorAll('.hero__stat-num');
+      nums.forEach(num => {
+        const text = num.textContent.trim();
+        if (text === '+500') animateCounter(num, 500);
+        if (text === '100%') {
+          let n = 0;
+          const t = setInterval(() => {
+            n++;
+            num.textContent = n + '%';
+            if (n >= 100) clearInterval(t);
+          }, 15);
+        }
+        if (text === '20 años') {
+          let n = 0;
+          const t = setInterval(() => {
+            n++;
+            num.textContent = n + ' años';
+            if (n >= 20) clearInterval(t);
+          }, 75);
+        }
+      });
+      statsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
 
-// ─── FORMULARIO DE CONTACTO ────────────────────────────────
-// Netlify Forms maneja el envío automáticamente.
-// Este script agrega feedback visual, validación y rate limiting.
+const statsEl = document.querySelector('.hero__stats');
+if (statsEl) statsObserver.observe(statsEl);
 
-const form        = document.getElementById('contactForm');
+// ─── FORMULARIO DE CONTACTO ─────────────────────────────────
+const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
-if (form) {
-  form.addEventListener('submit', function(e) {
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const submitBtn = form.querySelector('[type="submit"]');
-    const originalText = submitBtn.textContent;
-
-    // ─── VERIFICAR RATE LIMITING ───────────────────────────
-    if (!rateLimiter.isAllowed()) {
-      const waitTime = rateLimiter.getWaitTime();
-      const errorMsg = waitTime > 0
-        ? `Por favor espera ${waitTime} segundos antes de intentar nuevamente.`
-        : 'Demasiados intentos. Por favor intenta más tarde.';
-      alert(errorMsg);
-      return;
-    }
-
-    // Estado de carga
-    submitBtn.textContent = 'Enviando...';
-    submitBtn.disabled = true;
-
-    const enviarForm = () => {
-      form.submit();
-    };
-
-    if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
-      grecaptcha.ready(function() {
-        grecaptcha.execute('6LeIBqQsAAAAAKbVCSsrUfAry7T22uDEjTioMfCu', { action: 'submit' })
-          .then(function(token) {
-            document.getElementById('recaptchaResponse').value = token;
-            enviarForm();
-          })
-          .catch(function() {
-            enviarForm();
-          });
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(contactForm)).toString(),
       });
-    } else {
-      enviarForm();
+
+      if (response.ok) {
+        contactForm.style.display = 'none';
+        formSuccess.style.display = 'block';
+      } else {
+        alert('Hubo un error al enviar. Intentá de nuevo o escribinos por WhatsApp.');
+      }
+    } catch {
+      alert('Hubo un error al enviar. Revisá tu conexión e intentá de nuevo.');
     }
   });
 }
