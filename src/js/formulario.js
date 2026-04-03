@@ -74,7 +74,7 @@ const form        = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
 if (form) {
-  form.addEventListener('submit', async function(e) {
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
 
     const submitBtn = form.querySelector('[type="submit"]');
@@ -83,7 +83,7 @@ if (form) {
     // ─── VERIFICAR RATE LIMITING ───────────────────────────
     if (!rateLimiter.isAllowed()) {
       const waitTime = rateLimiter.getWaitTime();
-      const errorMsg = waitTime > 0 
+      const errorMsg = waitTime > 0
         ? `Por favor espera ${waitTime} segundos antes de intentar nuevamente.`
         : 'Demasiados intentos. Por favor intenta más tarde.';
       alert(errorMsg);
@@ -94,39 +94,23 @@ if (form) {
     submitBtn.textContent = 'Enviando...';
     submitBtn.disabled = true;
 
-    try {
-      // Obtener token de reCAPTCHA v3
-      if (typeof grecaptcha !== 'undefined') {
-        const token = await grecaptcha.execute('6LeIBqQsAAAAAKbVCSsrUfAry7T22uDEjTioMfCu', { action: 'submit' });
-        document.getElementById('recaptchaResponse').value = token;
-      }
-
-      // Enviar el formulario de manera tradicional para que Netlify Forms lo registre
+    const enviarForm = () => {
       form.submit();
+    };
 
-      // Si se llega aquí, el formulario ya debería estar en proceso de envío por Netlify.
-      formSuccess.classList.add('visible');
-      submitBtn.textContent = '¡Enviado!';
-
-      // Ocultar mensaje de éxito después de 6 segundos
-      setTimeout(() => {
-        formSuccess.classList.remove('visible');
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      }, 6000);
-    } catch (error) {
-      // ✅ Manejo de errores seguro (sin exponer detalles técnicos)
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
-      
-      // Mostrar mensaje genérico al usuario
-      alert('No pudimos procesar tu consulta. Por favor intenta nuevamente o escribinos por WhatsApp.');
-      
-      // Logging seguro (sin detalles sensibles)
-      // En producción, esto se enviaría a un servicio de logging seguro
-      if (typeof error !== 'undefined' && error.message === 'server_error') {
-        // Log interno solo para debugging (sin exponerlo al usuario)
-      }
+    if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+      grecaptcha.ready(function() {
+        grecaptcha.execute('6LeIBqQsAAAAAKbVCSsrUfAry7T22uDEjTioMfCu', { action: 'submit' })
+          .then(function(token) {
+            document.getElementById('recaptchaResponse').value = token;
+            enviarForm();
+          })
+          .catch(function() {
+            enviarForm();
+          });
+      });
+    } else {
+      enviarForm();
     }
   });
 }
