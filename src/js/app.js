@@ -15,14 +15,14 @@ const navLinks  = document.getElementById('navLinks');
 
 navToggle.addEventListener('click', () => {
   navLinks.classList.toggle('open');
-  navToggle.classList.toggle('open'); // ← anima el sandwich a X
+  navToggle.classList.toggle('open');
 });
 
 // Cerrar menú al hacer click en un link
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     navLinks.classList.remove('open');
-    navToggle.classList.remove('open'); // ← vuelve a sandwich
+    navToggle.classList.remove('open');
   });
 });
 
@@ -32,7 +32,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       e.preventDefault();
-      const offset = 70; // altura del navbar
+      const offset = 70;
       const top = target.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: 'smooth' });
     }
@@ -105,3 +105,33 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 const statsEl = document.querySelector('.hero__stats');
 if (statsEl) statsObserver.observe(statsEl);
+
+// ─── FORMULARIO DE CONTACTO ─────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const contactForm = document.getElementById('contactForm');
+  const formSuccess = document.getElementById('formSuccess');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(contactForm)).toString(),
+        });
+
+        if (response.ok) {
+          formSuccess.style.display = 'block';
+          contactForm.reset();
+        } else {
+          alert('Hubo un error al enviar. Intentá de nuevo o escribinos por WhatsApp.');
+        }
+      } catch {
+        alert('Hubo un error al enviar. Revisá tu conexión e intentá de nuevo.');
+      }
+    });
+  }
+});
