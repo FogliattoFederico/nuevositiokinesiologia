@@ -2,6 +2,7 @@
 const navbar = document.getElementById('navbar');
 
 window.addEventListener('scroll', () => {
+  //cuando se baja mas de 20 px se agrega la clase
   if (window.scrollY > 20) {
     navbar.classList.add('scrolled');
   } else {
@@ -21,6 +22,7 @@ navToggle.addEventListener('click', () => {
 // Cerrar menú al hacer click en un link
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
+    //toogle agrega o quita la clase open
     navLinks.classList.remove('open');
     navToggle.classList.remove('open');
   });
@@ -30,10 +32,14 @@ navLinks.querySelectorAll('a').forEach(link => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const target = document.querySelector(this.getAttribute('href'));
+    console.log(target)
     if (target) {
       e.preventDefault();
+      //resta 70 px
       const offset = 70;
+      //calculo exacto de la posicion de la seccion
       const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      //movimiento suave hacia la seccion
       window.scrollTo({ top, behavior: 'smooth' });
     }
   });
@@ -47,8 +53,11 @@ const observerOptions = {
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
+    //Si el elemento esta siendi visible
     if (entry.isIntersecting) {
+      //agrega la clase
       entry.target.classList.add('visible');
+      //deja de vigilar
       observer.unobserve(entry.target);
     }
   });
@@ -56,6 +65,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.service-card, .testimonial-card, .about__grid, .contact__grid, .hero__card').forEach(el => {
   el.classList.add('fade-in');
+  //vigila las secciones seleccionadas
   observer.observe(el);
 });
 
@@ -76,6 +86,7 @@ function animateCounter(el, target, duration = 1500, suffix = '') {
 
 const statsObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
+    //si esta siendo observado
     if (entry.isIntersecting) {
       const nums = entry.target.querySelectorAll('.hero__stat-num');
       nums.forEach(num => {
