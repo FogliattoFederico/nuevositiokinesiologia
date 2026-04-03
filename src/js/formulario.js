@@ -101,29 +101,19 @@ if (form) {
         document.getElementById('recaptchaResponse').value = token;
       }
 
-      const formData = new FormData(form);
+      // Enviar el formulario de manera tradicional para que Netlify Forms lo registre
+      form.submit();
 
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString(),
-      });
+      // Si se llega aquí, el formulario ya debería estar en proceso de envío por Netlify.
+      formSuccess.classList.add('visible');
+      submitBtn.textContent = '¡Enviado!';
 
-      if (response.ok) {
-        // ✅ Éxito
-        form.reset();
-        formSuccess.classList.add('visible');
-        submitBtn.textContent = '¡Enviado!';
-
-        // Ocultar mensaje de éxito después de 6 segundos
-        setTimeout(() => {
-          formSuccess.classList.remove('visible');
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-        }, 6000);
-      } else {
-        throw new Error('server_error');
-      }
+      // Ocultar mensaje de éxito después de 6 segundos
+      setTimeout(() => {
+        formSuccess.classList.remove('visible');
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }, 6000);
     } catch (error) {
       // ✅ Manejo de errores seguro (sin exponer detalles técnicos)
       submitBtn.textContent = originalText;
